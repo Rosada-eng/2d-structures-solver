@@ -120,7 +120,7 @@ def importa(entradaNome):
         R[c,0] = GDL-1
 
 
-    return ow, 
+    return nn,N,nm,Inc,nc,F,nr,R 
 
 def geraSaida(nome,Ft,Ut,Epsi,Fi,Ti):
     nome = nome + '.txt'

@@ -12,3 +12,5 @@ if __name__ == '__main__':
     R = vetor de restrições
     """
     nn,N,nm,Inc,nc,F,nr,R = importa("entrada.xls")
+
+    print(N, "\n\n", Inc, "\n\n", F, "\n\n", R)
