@@ -9,7 +9,10 @@ class Node(Coord):
         self.x = Coord(idx, x)
         self.y = Coord(idy, y)
 
+    def __str__(self) -> str:
+        return f"Nó {self.number}: (x, y) = ({self.x.value}, {self.y.value}) | (idx, idy) = ({self.x.id}, {self.y.id})"
+
     def distance_to(self, node):
-        return ((self.x - node.x.value)**2 + (self.y - node.y.value)**2)**0.5
+        return ((self.x.value - node.x.value)**2 + (self.y.value - node.y.value)**2)**0.5
 
     #TODO: Adicionar métodos convenientes para cálculo

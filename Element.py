@@ -1,5 +1,8 @@
 import numpy as np
 
+from Node import Node
+
+
 class K:
     def __init__(self, element_number, node1, node2):
         self.element_number = element_number
@@ -11,7 +14,7 @@ class K:
 
 
 class Element:
-    def __init__(self, element_number, node1, node2, section_area, elasticity):
+    def __init__(self, element_number, node1: Node, node2: Node, section_area, elasticity):
         self.number = element_number
         self.n1 = node1
         self.n2 = node2
@@ -22,13 +25,13 @@ class Element:
         self.Ke.matrix = self.global_stiffness()
 
     def __str__(self):
-        return "Elemento {0}: ({1}-{2}) {({4},{5}) ; ({6},{7})}".format(self.number, self.n1.number, self.n2.number, self.n1.x, self.n1.y, self.n2.x, self.n2.y)
+        return f"Elemento {self.number}: ({self.n1.number}-{self.n2.number}) => ({self.n1.x.value}, {self.n1.y.value})-({self.n2.x.value}-{self.n2.y.value})"
 
     def length(self):
         return self.n1.distance_to(self.n2)
 
     def angle(self):
-        return np.arctan2(self.n2.y - self.n1.y, self.n2.x - self.n1.x)
+        return np.arctan2(self.n2.y.value - self.n1.y.value, self.n2.x.value - self.n1.x.value)
 
     def stiffness_module(self):
         return self.E * self.A / self.length()
