@@ -5,7 +5,7 @@ from Element import Element
 
 class Kg:
     def __init__(self, n_nos):
-        self.ids = range(1, n_nos+1)                      # Guarda uma lista com o id de cada coordenada da Treliça
+        self.ids = range(0, n_nos)                      # Guarda uma lista com o id de cada coordenada da Treliça
         self.matrix = np.zeros((2*n_nos, 2*n_nos))
 
 
@@ -23,26 +23,22 @@ class Trellis(Kg):
         """
         elements = []
         for element in self.elements:
-            if np.isin(element.Ke.ids, indexes_list).sum() >= 2: # + de 2 Trues no array comparado
+            # Se os dois ids compõem o elemento, adiciona o elemento à lista
+            if( indexes_list[0] in element.Ke.ids) and (indexes_list[1] in element.Ke.ids):
                 elements.append(element)
 
+        # print(f"{len(elements)} elementos com os id's {indexes_list}: {[element.number for element in elements]}")
         return elements
 
     def calc_Kg(self):
         self.Kg = Kg(len(self.elements))
 
-        for i in range(1, 2*len(self.elements)+1):
-            for j in range(1, 2*len(self.elements)+1):
+        for i in range(0, 2*len(self.elements)):
+            for j in range(0, 2*len(self.elements)):
 
                 # Selecionar os elementos que contém o id i e j
                 elements = self._find_elements_with_indexes_in_K([i, j])
                 for element in elements:
-                    _i = element.Ke.ids.index(i) - 1
-                    _j = element.Ke.ids.index(j) - 1
-                    self.Kg.matrix[i - 1][j - 1] += element.Ke.matrix[_i][_j]
-
-# k1 = [0,1,2,3]
-# k2 = [0,1,4,5]
-# k3 = [2,3,4,5]
-
-# print(np.isin(k3, [2,3]).sum())
+                    _i = element.Ke.ids.index(i) 
+                    _j = element.Ke.ids.index(j)
+                    self.Kg.matrix[i][j] += element.Ke.matrix[_i][_j]
