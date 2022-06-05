@@ -29,12 +29,13 @@ geraSaida(nome,Ft,Ut,Epsi,Fi,Ti)
 -------------------------------------------------------------------------------
 
 """
-def plota(N,Inc):
+def plota(N,Inc, deformed):
     # Numero de membros
     nm = len(Inc[:,0])
     
     import matplotlib as mpl
     import matplotlib.pyplot as plt
+
 
 #    plt.show()
     fig = plt.figure()
@@ -45,7 +46,8 @@ def plota(N,Inc):
         n1 = int(Inc[i,0])
         n2 = int(Inc[i,1])        
 
-        plt.plot([N[0,n1-1],N[0,n2-1]],[N[1,n1-1],N[1,n2-1]],color='r',linewidth=3)
+        plt.plot([N[0,n1-1],N[0,n2-1]],[N[1,n1-1],N[1,n2-1]],color='r',linewidth=2, alpha=0.5)
+        plt.plot([deformed[0,n1-1],deformed[0,n2-1]],[deformed[1,n1-1],deformed[1,n2-1]],color='b',linewidth=2)
 
 
     plt.xlabel('x [m]')

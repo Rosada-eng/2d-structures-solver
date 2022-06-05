@@ -17,7 +17,7 @@ if __name__ == '__main__':
     nr = numero de restricoes
     R = vetor de restrições
     """
-    nn, N, nm, Inc, nc, F, nr, R = importa("entrada.xls")
+    nn, N, nm, Inc, nc, F, nr, R = importa("entrada2.xls")
 
     count_number = 1
     count_ids = 0
@@ -118,10 +118,22 @@ if __name__ == '__main__':
     print("\nForças internas [N]")
     print(internal_forces)
 
-    # Plota imagem da treliça
-    plota(N, Inc)
 
-    #TODO: plotar treliça com deslocamentos
+    # filter disp_full by even indexes
+    disp_full_X = disp_full[::2]
+    disp_full_Y = disp_full[1::2]
+
+    print("Desloc X \n", disp_full_X)
+    print("Desloc Y \n", disp_full_Y)
+
+
+    amplification = 0.04156014
+    deformed = [disp_full_X, disp_full_Y ]
+    deformed = np.reshape(deformed, (2, nn))
+
+    deformed = deformed * amplification
+    deformed = N + deformed
+    plota(N, Inc, deformed)
 
     # Gera o arquivo de saída
     geraSaida('saida', reactions, disp_full, trellis.deforms, internal_forces, trellis.strains)
