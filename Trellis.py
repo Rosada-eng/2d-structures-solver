@@ -10,8 +10,9 @@ class Kg:
 
 
 class Trellis(Kg):
-    def __init__(self, elements=[]):
+    def __init__(self, num_nodes, elements=[]):
         self.elements = elements
+        self.num_nodes = num_nodes
         self.Kg = None
         self.displacements = None
         self.deforms = None
@@ -34,10 +35,10 @@ class Trellis(Kg):
         return elements
 
     def calc_Kg(self):
-        self.Kg = Kg(len(self.elements))
+        self.Kg = Kg(self.num_nodes)
 
-        for i in range(0, 2*len(self.elements)):
-            for j in range(0, 2*len(self.elements)):
+        for i in range(0, 2*self.num_nodes):
+            for j in range(0, 2*self.num_nodes):
 
                 # Selecionar os elementos que contém o id i e j
                 elements = self._find_elements_with_indexes_in_K([i, j])

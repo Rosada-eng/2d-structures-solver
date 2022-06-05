@@ -1,3 +1,5 @@
+import dis
+
 from Element import *
 from funcoesTermosol import geraSaida, importa, plota
 from Node import *
@@ -31,7 +33,7 @@ if __name__ == '__main__':
     count_number = 1
 
     # Constrói treliça
-    trellis = Trellis()
+    trellis = Trellis(num_nodes=nn)
     elements = {}
     for i in range(0, nm):
         new_element = Element(count_number, nodes[Inc[i][0]], nodes[Inc[i][1]], Inc[i][3], Inc[i][2])
@@ -115,3 +117,11 @@ if __name__ == '__main__':
 
     print("\nForças internas [N]")
     print(internal_forces)
+
+    # Plota imagem da treliça
+    plota(N, Inc)
+
+    #TODO: plotar treliça com deslocamentos
+
+    # Gera o arquivo de saída
+    geraSaida('saida', reactions, disp_full, trellis.deforms, internal_forces, trellis.strains)
