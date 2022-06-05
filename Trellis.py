@@ -13,6 +13,9 @@ class Trellis(Kg):
     def __init__(self, elements=[]):
         self.elements = elements
         self.Kg = None
+        self.displacements = None
+        self.deforms = None
+        self.strains = None
 
     def add_element(self, element: Element):
         self.elements.append(element)
@@ -42,3 +45,19 @@ class Trellis(Kg):
                     _i = element.Ke.ids.index(i) 
                     _j = element.Ke.ids.index(j)
                     self.Kg.matrix[i][j] += element.Ke.matrix[_i][_j]
+
+    def calc_deforms(self):
+        """
+        Calcula deformação nos elementos
+        """
+        self.deforms = np.zeros((len(self.elements), 1))
+        for e in self.elements:
+            self.deforms[e.number-1] = e.deform()
+
+    def calc_strains(self):
+        """
+        Calcula tensão nos elementos
+        """
+        self.strains = np.zeros((len(self.elements), 1))
+        for e in self.elements:
+            self.strains[e.number-1] = e.strain()

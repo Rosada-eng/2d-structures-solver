@@ -34,7 +34,6 @@ class Element:
         return self.E * self.A / self.length()
 
     def global_stiffness(self):
-        # theta = self.angle()
         s = (self.n2.y.value - self.n1.y.value) / self.length()
         c = (self.n2.x.value - self.n1.x.value) / self.length()
         return self.stiffness_module() * np.array([
@@ -42,4 +41,24 @@ class Element:
                 [c*s, s**2, -c*s, -s**2],
                 [-c**2, -c*s, c**2, c*s],
                 [-c*s, -s**2, c*s, s**2]])
+
+    def deform(self):
+        """
+        Calcula a deformação da barra
+        """
+        s = (self.n2.y.value - self.n1.y.value) / self.length()
+        c = (self.n2.x.value - self.n1.x.value) / self.length()
+        t_array = np.array([-c, -s, c, s])
+        dxy = np.array([self.n1.dx, self.n1.dy, self.n2.dx, self.n2.dy])
+        return (1/self.length()) * np.dot(t_array, dxy)
+
+    def strain(self):
+        """
+        Calcula a tensão da barra
+        """
+        s = (self.n2.y.value - self.n1.y.value) / self.length()
+        c = (self.n2.x.value - self.n1.x.value) / self.length()
+        t_array = np.array([-c, -s, c, s])
+        dxy = np.array([self.n1.dx, self.n1.dy, self.n2.dx, self.n2.dy])
+        return (self.E / self.length()) * np.dot(t_array, dxy)
 
