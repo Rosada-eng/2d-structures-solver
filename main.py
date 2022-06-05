@@ -110,3 +110,8 @@ if __name__ == '__main__':
     print("\nTensões internas [Pa]")
     print(trellis.strains)
 
+    A_vec = np.array([[e.A] for e in trellis.elements])
+    internal_forces = trellis.strains * A_vec
+
+    print("\nForças internas [N]")
+    print(internal_forces)
