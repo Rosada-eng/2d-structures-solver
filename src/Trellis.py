@@ -1,6 +1,6 @@
 import numpy as np
 
-from Element import Element
+from .Element import Element
 
 
 class Kg:

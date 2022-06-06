@@ -15,10 +15,7 @@ class Node(Coord):
         return f"Nó {self.number}: (x, y) = ({self.x.value}, {self.y.value}) | (idx, idy) = ({self.x.id}, {self.y.id})"
 
     def distance_to(self, node):
+        """
+        Calcula a distância entre dois nós
+        """
         return ((self.x.value - node.x.value)**2 + (self.y.value - node.y.value)**2)**0.5
-
-    def set_dx(self, dx):
-        self.dx = dx
-
-    def set_dy(self, dy):
-        self.dy = dy
