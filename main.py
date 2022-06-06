@@ -1,10 +1,10 @@
 import dis
 
-from Element import *
-from funcoesTermosol import geraSaida, importa, plota
-from Node import *
-from Trellis import *
-from utils import *
+from src.Element import *
+from src.Node import *
+from src.Trellis import *
+from utils.funcoesTermosol import geraSaida, importa, plota
+from utils.utils import *
 
 if __name__ == '__main__':
     """
@@ -17,6 +17,8 @@ if __name__ == '__main__':
     nr = numero de restricoes
     R = vetor de restrições
     """
+
+    # Lê arquivo de entrada
     nn, N, nm, Inc, nc, F, nr, R = importa("entrada2.xls")
 
     count_number = 1
@@ -66,6 +68,9 @@ if __name__ == '__main__':
             i_f += 1
 
     # Deslocamento e erro máximo obtido
+    """
+        Para usar o método de Jacobi, basta trocar o método abaixo
+    """
     disp_reduced, max_err = gauss_seidel(1e3, reduced_kg, reduced_F, 1e-6)
     disp_full = np.zeros((2*nn, 1))
     i_d = 0
@@ -79,8 +84,6 @@ if __name__ == '__main__':
 
     # Atribuição dos deslocamentos aos nós
     for i in range(0, nn - 1):
-        # nodes[i+1].dx = disp_full[2*i]
-        # nodes[i+1].dy = disp_full[2*i+1]
         trellis.elements[i].n1.dx = disp_full[2*i]
         trellis.elements[i].n1.dy = disp_full[2*i + 1]
         trellis.elements[i].n2.dx = disp_full[2*i + 2]

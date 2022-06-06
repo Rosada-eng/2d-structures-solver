@@ -1,6 +1,6 @@
 import numpy as np
 
-from Node import Node
+from .Node import Node
 
 
 class K:
@@ -28,12 +28,21 @@ class Element:
         return f"Elemento {self.number}: Nós({self.n1.number}-{self.n2.number}) | ids({self.Ke.ids}) | A= {self.A} E= {self.E}"
 
     def length(self):
+        """
+        Calcula o comprimento da barra
+        """
         return self.n1.distance_to(self.n2)
 
     def stiffness_module(self):
+        """
+        Calcula o módulo de rigidez da barra
+        """
         return self.E * self.A / self.length()
 
     def global_stiffness(self):
+        """
+        Calcula a matriz de rigidez global
+        """
         s = (self.n2.y.value - self.n1.y.value) / self.length()
         c = (self.n2.x.value - self.n1.x.value) / self.length()
         return self.stiffness_module() * np.array([
