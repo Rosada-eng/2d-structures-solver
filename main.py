@@ -1,12 +1,34 @@
-import dis
-
+import sys, getopt
 from Element import *
 from funcoesTermosol import geraSaida, importa, plota
 from Node import *
 from Trellis import *
 from utils import *
 
-if __name__ == '__main__':
+def main(argv):
+    inputfile = ''
+    outputfile = ''
+    amplification = 1.0
+
+    try:
+        opts, args = getopt.getopt(argv, "hi:o:a:", ["input=", "output="])
+    except getopt.GetoptError:
+        print('main.py -i <inputfile> -o <outputfile> -a <amplification>')
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print('main.py -i <inputfile> -o <outputfile> -a <amplification>')
+            sys.exit()
+        elif opt in ("-i", "--input"):
+            inputfile = arg
+        elif opt in ("-o", "--output"):
+            outputfile = arg
+        elif opt in ("-a", "--amplification"):
+            amplification = float(arg)
+        
+    print("Input file is " + inputfile)
+    print("Output file is " + outputfile)
+        
     """
     nn = numero de nos
     N = matriz dos nos
@@ -17,7 +39,7 @@ if __name__ == '__main__':
     nr = numero de restricoes
     R = vetor de restrições
     """
-    nn, N, nm, Inc, nc, F, nr, R = importa("entrada2.xls")
+    nn, N, nm, Inc, nc, F, nr, R = importa(inputfile)
 
     count_number = 1
     count_ids = 0
@@ -126,8 +148,18 @@ if __name__ == '__main__':
     print("Desloc X \n", disp_full_X)
     print("Desloc Y \n", disp_full_Y)
 
+    if inputfile == 'entrada.xls':
+        print("Fator recomendado de amplificação: ", 1e4)
+        # amplification = 1e4
 
-    amplification = 0.04156014
+    elif inputfile == 'entrada2.xls':
+        print("Fator recomendado de amplificação: ", 0.04156014)
+        # amplification =  0.04156014
+
+    # else:
+    #     amplification = 1
+ 
+
     deformed = [disp_full_X, disp_full_Y ]
     deformed = np.reshape(deformed, (2, nn))
 
@@ -136,4 +168,7 @@ if __name__ == '__main__':
     plota(N, Inc, deformed)
 
     # Gera o arquivo de saída
-    geraSaida('saida', reactions, disp_full, trellis.deforms, internal_forces, trellis.strains)
+    geraSaida(outputfile, reactions, disp_full, trellis.deforms, internal_forces, trellis.strains)
+
+if __name__ == '__main__':
+    main(sys.argv[1:])
